@@ -81,7 +81,7 @@ open class LineChart: UIView {
     
     public struct Dots {
         public var visible: Bool = true
-        public var color: UIColor = UIColor.white
+        public var color: UIColor = UIColor.clear
         public var innerRadius: CGFloat = 8
         public var outerRadius: CGFloat = 12
         public var innerRadiusHighlighted: CGFloat = 8
@@ -101,9 +101,10 @@ open class LineChart: UIView {
     // values calculated on init
     fileprivate var drawingHeight: CGFloat = 0 {
         didSet {
-            let max = getMaximumValue()
+            
+            let max = 600 //getMaximumValue()
             let min = getMinimumValue()
-            y.linear = LinearScale(domain: [min, max], range: [0, drawingHeight])
+            y.linear = LinearScale(domain: [min, CGFloat(max)], range: [0, drawingHeight])
             y.scale = y.linear.scale()
             y.ticks = y.linear.ticks(Int(y.grid.count))
         }
@@ -238,12 +239,30 @@ open class LineChart: UIView {
             return
         }
         let point: AnyObject! = touches.anyObject() as AnyObject!
-        let xValue = point.location(in: self).x
-        let inverted = self.x.invert(xValue - x.axis.inset)
-        let rounded = Int(round(Double(inverted)))
-        let yValues: [CGFloat] = getYValuesForXValue(rounded)
-        highlightDataPoints(rounded)
-        delegate?.didSelectDataPoint(CGFloat(rounded), yValues: yValues)
+        //let xValue = point.location(in: self).x
+        let pointOnGraph = point.location(in: self)
+        
+        var isPointContainsInLayer = false
+        var rounded = 0
+        for dotsData in self.dotsDataStore{
+            for dot in dotsData {
+                
+                let frame = dot.frame
+                
+                if frame.contains(pointOnGraph)
+                {
+                    rounded = dot.layerIndex
+                    isPointContainsInLayer = true
+                    break
+                }
+            }
+        }
+        
+        if isPointContainsInLayer{
+            highlightDataPoints(rounded)
+        }
+
+        //delegate?.didSelectDataPoint(CGFloat(rounded), yValues: yValues)
     }
     
     
@@ -274,6 +293,8 @@ open class LineChart: UIView {
             // make all dots white again
             for dot in dotsData {
                 dot.backgroundColor = dots.color.cgColor
+                dot.borderWidth = 0
+                dot.borderColor = UIColor.clear.cgColor
             }
             // highlight current data point
             var dot: DotCALayer
@@ -284,7 +305,9 @@ open class LineChart: UIView {
             } else {
                 dot = dotsData[index]
             }
-            dot.backgroundColor = Helpers.lightenUIColor(colors[lineIndex]).cgColor
+            dot.borderWidth = 1
+            dot.borderColor = UIColor(red: 88/255.0, green: 127/255.0, blue: 247/255.0, alpha: 1).cgColor
+          //  dot.backgroundColor = Helpers.lightenUIColor(colors[lineIndex]).cgColor
         }
     }
     
@@ -296,6 +319,7 @@ open class LineChart: UIView {
     fileprivate func drawDataDots(_ lineIndex: Int) {
         var dotLayers: [DotCALayer] = []
         var data = self.dataStore[lineIndex]
+        var layerLocalIndex = 0
         
         for index in 0..<data.count {
             
@@ -308,6 +332,8 @@ open class LineChart: UIView {
             
             // draw custom layer with another layer in the center
             let dotLayer = DotCALayer()
+            dotLayer.recordIndex = index
+            dotLayer.layerIndex = layerLocalIndex
             dotLayer.dotInnerColor = UIColor(red: 155/255.0, green: 155/255.0, blue: 174/255.0, alpha: 1)
             //dotLayer.dotInnerColor = colors[lineIndex]
             dotLayer.innerRadius = dots.innerRadius
@@ -316,6 +342,8 @@ open class LineChart: UIView {
             dotLayer.frame = CGRect(x: xValue, y: yValue, width: dots.outerRadius, height: dots.outerRadius)
             self.layer.addSublayer(dotLayer)
             dotLayers.append(dotLayer)
+            
+            layerLocalIndex = layerLocalIndex + 1
             
             // animate opacity
             if animation.enabled {
@@ -460,8 +488,8 @@ open class LineChart: UIView {
             p1 = points[i]
             p2 = points[i + 1]
             
-            tensionBezier1 = 0.2
-            tensionBezier2 = 0.2
+            tensionBezier1 = 0.15
+            tensionBezier2 = 0.15
             
             if i > 0 {  // Exception for first line because there is no previous point
                 p0 = previousPoint1
@@ -492,20 +520,6 @@ open class LineChart: UIView {
             
             previousPoint1 = p1;
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         
         
         let layer = CAShapeLayer()
@@ -699,6 +713,8 @@ class DotCALayer: CALayer {
     
     var innerRadius: CGFloat = 8
     var dotInnerColor = UIColor.black
+    var layerIndex: Int = 0
+    var recordIndex:Int = 0
     
     override init() {
         super.init()

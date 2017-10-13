@@ -28,7 +28,7 @@ class MainViewController: UIViewController, LineChartDelegate {
         
       //  let data: [CGFloat] = [0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0]
         
-        let data: [CGFloat] = [3, 4, 2, 11, 0, 15,3, 0, 2, 11, 13, 15]
+        let data: [CGFloat] = [220, 0, 212, 223, 254, 234,213, 0, 235, 221, 212, 231]
       //  let data2: [CGFloat] = [1, 3, 5, 13, 17, 20]
         
         // simple line with custom x axis labels
@@ -50,7 +50,7 @@ class MainViewController: UIViewController, LineChartDelegate {
         self.view.addSubview(lineChart)
         views["chart"] = lineChart
         view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[chart]-|", options: [], metrics: nil, views: views))
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[label]-[chart(==100)]", options: [], metrics: nil, views: views))        
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[label]-[chart(==195)]", options: [], metrics: nil, views: views))
     }
     
     
