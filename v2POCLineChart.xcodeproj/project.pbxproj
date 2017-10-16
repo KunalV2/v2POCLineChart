@@ -13,6 +13,7 @@
 		C3B13C611F9091E500C7CD46 /* LineChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B13C5E1F9091E500C7CD46 /* LineChart.swift */; };
 		C3B13C621F9091E500C7CD46 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B13C5F1F9091E500C7CD46 /* MainViewController.swift */; };
 		C3B13C631F9091E500C7CD46 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B13C601F9091E500C7CD46 /* Operators.swift */; };
+		C3B13C671F94ABB200C7CD46 /* GraphBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B13C661F94ABB200C7CD46 /* GraphBubbleView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		C3B13C5E1F9091E500C7CD46 /* LineChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineChart.swift; sourceTree = "<group>"; };
 		C3B13C5F1F9091E500C7CD46 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		C3B13C601F9091E500C7CD46 /* Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
+		C3B13C661F94ABB200C7CD46 /* GraphBubbleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphBubbleView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,10 +58,11 @@
 		C3B13C4B1F8FAFB300C7CD46 /* v2POCLineChart */ = {
 			isa = PBXGroup;
 			children = (
-				C3B13C5E1F9091E500C7CD46 /* LineChart.swift */,
-				C3B13C5F1F9091E500C7CD46 /* MainViewController.swift */,
-				C3B13C601F9091E500C7CD46 /* Operators.swift */,
 				C3B13C4C1F8FAFB300C7CD46 /* AppDelegate.swift */,
+				C3B13C5F1F9091E500C7CD46 /* MainViewController.swift */,
+				C3B13C661F94ABB200C7CD46 /* GraphBubbleView.swift */,
+				C3B13C5E1F9091E500C7CD46 /* LineChart.swift */,
+				C3B13C601F9091E500C7CD46 /* Operators.swift */,
 				C3B13C531F8FAFB400C7CD46 /* Assets.xcassets */,
 				C3B13C551F8FAFB400C7CD46 /* LaunchScreen.storyboard */,
 				C3B13C581F8FAFB400C7CD46 /* Info.plist */,
@@ -142,6 +145,7 @@
 				C3B13C631F9091E500C7CD46 /* Operators.swift in Sources */,
 				C3B13C611F9091E500C7CD46 /* LineChart.swift in Sources */,
 				C3B13C4D1F8FAFB300C7CD46 /* AppDelegate.swift in Sources */,
+				C3B13C671F94ABB200C7CD46 /* GraphBubbleView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

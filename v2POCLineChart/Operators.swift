@@ -1,11 +1,3 @@
-//
-//  Operators.swift
-//  SwiftCharts
-//
-//  Created by ischuetz on 16/07/16.
-//  Copyright © 2016 ivanschuetz. All rights reserved.
-//
-
 import UIKit
 import Foundation
 

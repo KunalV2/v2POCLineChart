@@ -1,6 +1,3 @@
-
-
-
 import UIKit
 import QuartzCore
 
@@ -209,8 +206,7 @@ open class LineChart: UIView {
         }
         
     }
-    
-    
+
     
     /**
      * Get y value for given x value. Or return zero or maximum value.
@@ -229,8 +225,7 @@ open class LineChart: UIView {
         return result
     }
     
-    
-    
+
     /**
      * Handle touch events.
      */
@@ -265,25 +260,19 @@ open class LineChart: UIView {
         //delegate?.didSelectDataPoint(CGFloat(rounded), yValues: yValues)
     }
     
-    
-    
     /**
      * Listen on touch end event.
      */
     override open func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         handleTouchEvents(touches as NSSet!, event: event!)
     }
-    
-    
-    
+
     /**
      * Listen on touch move event
      */
     override open func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         handleTouchEvents(touches as NSSet!, event: event!)
     }
-    
-    
     
     /**
      * Highlight data points at index.
@@ -307,11 +296,16 @@ open class LineChart: UIView {
             }
             dot.borderWidth = 1
             dot.borderColor = UIColor(red: 88/255.0, green: 127/255.0, blue: 247/255.0, alpha: 1).cgColor
+            
+            
+            let bubbleView = GraphBubbleView(frame: CGRect(x:20 , y:20 , width: 51.0, height:36))
+            bubbleView.drawBubble(chartPointValue: 23)
+            self.addSubview(bubbleView)
+            
+            
           //  dot.backgroundColor = Helpers.lightenUIColor(colors[lineIndex]).cgColor
         }
     }
-    
-    
     
     /**
      * Draw small dot at every data point.
@@ -412,33 +406,23 @@ open class LineChart: UIView {
         return min
     }
     
-    
-    
     /**
      * Draw line.
      */
     fileprivate func drawLine(_ lineIndex: Int) {
-        
-        
-        
+
         var data = self.dataStore[lineIndex]
         let path = UIBezierPath()
         
-        
-        
         /*
-        
-        
+
         path.lineCapStyle = .round
         path.lineJoinStyle = .round
         
         var xValue = self.x.scale(0) + x.axis.inset
         var yValue = self.bounds.height - self.y.scale(data[0]) - y.axis.inset
         path.move(to: CGPoint(x: xValue, y: yValue))
-        
-        
-        
-        
+         
         for index in 1..<data.count {
             if data[index] <= 0{
                 continue
@@ -448,11 +432,6 @@ open class LineChart: UIView {
             path.addLine(to: CGPoint(x: xValue, y: yValue))
         }
         */
-        
-        
-        
-        
-     //   let path = UIBezierPath()
         
         var p0: CGPoint
         var p1: CGPoint
@@ -467,7 +446,18 @@ open class LineChart: UIView {
         var previousPoint1: CGPoint = CGPoint.zero
         
         var xValue = self.x.scale(0) + x.axis.inset
-        var yValue = self.bounds.height - self.y.scale(data[0]) - y.axis.inset
+        
+        var startIndex:Int = 0
+        
+        for index in 0..<data.count {
+            if data[index] > 0{
+                startIndex = index
+                xValue = self.x.scale(CGFloat(index)) + x.axis.inset
+                break
+            }
+        }
+        
+        var yValue = self.bounds.height - self.y.scale(data[startIndex]) - y.axis.inset
         path.move(to: CGPoint(x: xValue, y: yValue))
         
         //path.move(to: points.first!)
@@ -482,6 +472,10 @@ open class LineChart: UIView {
             yValue = self.bounds.height - self.y.scale(data[index]) - y.axis.inset
             points.append(CGPoint(x: xValue, y: yValue))
             //path.addLine(to: CGPoint(x: xValue, y: yValue))
+        }
+        
+        if (points.isEmpty) {
+            return
         }
         
         for i in 0..<(points.count - 1) {
@@ -543,8 +537,6 @@ open class LineChart: UIView {
         lineLayerStore.append(layer)
     }
     
-    
-    
     /**
      * Fill area between line chart and x-axis.
      */
@@ -574,8 +566,6 @@ open class LineChart: UIView {
         path.fill()
     }
     
-    
-    
     /**
      * Draw x grid.
      */
@@ -593,8 +583,6 @@ open class LineChart: UIView {
         }
         path.stroke()
     }
-    
-    
     
     /**
      * Draw y grid.
@@ -614,8 +602,6 @@ open class LineChart: UIView {
         path.stroke()
     }
     
-    
-    
     /**
      * Draw grid.
      */
@@ -623,8 +609,6 @@ open class LineChart: UIView {
         drawXGrid()
         //drawYGrid()
     }
-    
-    
     
     /**
      * Draw x labels.
@@ -641,7 +625,7 @@ open class LineChart: UIView {
             let label = UILabel(frame: CGRect(x: xValue, y: y, width: width, height: x.axis.inset))
             label.font = UIFont.preferredFont(forTextStyle: UIFontTextStyle.caption2)
             label.textAlignment = .center
-           label.textColor = UIColor(red: 155/255.0, green: 155/255.0, blue: 174/255.0, alpha: 1)
+            label.textColor = UIColor(red: 155/255.0, green: 155/255.0, blue: 174/255.0, alpha: 1)
             if (x.labels.values.count != 0) {
                 text = x.labels.values[index]
             } else {
@@ -651,9 +635,7 @@ open class LineChart: UIView {
             self.addSubview(label)
         }
     }
-    
-    
-    
+
     /**
      * Draw y labels.
      */
@@ -670,8 +652,6 @@ open class LineChart: UIView {
         }
     }
     
-    
-    
     /**
      * Add line chart
      */
@@ -679,8 +659,6 @@ open class LineChart: UIView {
         self.dataStore.append(data)
         self.setNeedsDisplay()
     }
-    
-    
     
     /**
      * Make whole thing white again.
@@ -692,8 +670,6 @@ open class LineChart: UIView {
         self.removeAll = false
     }
     
-    
-    
     /**
      * Remove charts, areas and labels but keep axis and grid.
      */
@@ -703,8 +679,6 @@ open class LineChart: UIView {
         self.setNeedsDisplay()
     }
 }
-
-
 
 /**
  * DotCALayer
@@ -737,10 +711,7 @@ class DotCALayer: CALayer {
         innerDotLayer.cornerRadius = innerRadius / 2
         self.addSublayer(innerDotLayer)
     }
-    
 }
-
-
 
 /**
  * LinearScale
@@ -824,5 +795,4 @@ open class LinearScale {
         }
         return f
     }
-    
 }
