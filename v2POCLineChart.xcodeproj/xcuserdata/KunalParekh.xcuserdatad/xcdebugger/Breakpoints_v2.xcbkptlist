@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "v2POCLineChart/GraphBubbleView.swift"
-            timestampString = "529848806.887944"
+            filePath = "v2POCLineChart/LineChart.swift"
+            timestampString = "529854338.083327"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "28"
-            endingLineNumber = "28"
-            landmarkName = "drawBubble(chartPointValue:)"
+            startingLineNumber = "299"
+            endingLineNumber = "299"
+            landmarkName = "highlightDataPoints(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "v2POCLineChart/LineChart.swift"
-            timestampString = "529848599.104106"
+            timestampString = "529854338.083327"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "297"
-            endingLineNumber = "297"
+            startingLineNumber = "303"
+            endingLineNumber = "303"
             landmarkName = "highlightDataPoints(_:)"
             landmarkType = "7">
          </BreakpointContent>

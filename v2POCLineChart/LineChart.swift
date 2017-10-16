@@ -39,6 +39,8 @@ open class LineChart: UIView {
         }
     }
     
+    let bubbleView = GraphBubbleView()
+    
     public struct Labels {
         public var visible: Bool = true
         public var values: [String] = []
@@ -297,9 +299,8 @@ open class LineChart: UIView {
             dot.borderWidth = 1
             dot.borderColor = UIColor(red: 88/255.0, green: 127/255.0, blue: 247/255.0, alpha: 1).cgColor
             
-            
-            let bubbleView = GraphBubbleView(frame: CGRect(x:20 , y:20 , width: 51.0, height:36))
-            bubbleView.drawBubble(chartPointValue: 23)
+            var data = self.dataStore[0]
+            bubbleView.setChartPointValue(chartPointValue: Int(data[dot.recordIndex]))
             self.addSubview(bubbleView)
             
             
@@ -657,6 +658,8 @@ open class LineChart: UIView {
      */
     open func addLine(_ data: [CGFloat]) {
         self.dataStore.append(data)
+        bubbleView.frame = CGRect(x:20 , y:20 , width: 51.0, height:36)
+        bubbleView.drawBubble()
         self.setNeedsDisplay()
     }
     

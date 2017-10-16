@@ -20,12 +20,12 @@ class GraphBubbleView: UIView {
     */
     
     var borderWidth : CGFloat = 0.7 // Should be less or equal to the `radius` property
+    let label = UILabel()
 
-    func drawBubble(chartPointValue:Int){
+    func drawBubble(){
         
-        let label = UILabel(frame: CGRect(x: 5, y: 2, width: (self.frame.size.width-10), height: (self.frame.size.height-10)))
+        label.frame = CGRect(x: 5, y: 2, width: (self.frame.size.width-10), height: (self.frame.size.height-10))
         label.textAlignment = .center
-        label.text = String(chartPointValue)
         label.numberOfLines = 0
         label.font = UIFont(name: "Lato-Regular", size: 12)
         label.textColor = UIColor(red: 57/255.0, green: 57/255.0, blue: 57/255.0, alpha: 1)
@@ -50,9 +50,12 @@ class GraphBubbleView: UIView {
         path.addLine(to: CGPoint(x: 30, y: 31))
         path.addLine(to: CGPoint(x: 25, y: 35))
         path.addLine(to: CGPoint(x: 21, y: 31))
-        path.addArc(withCenter: CGPoint(x: 16, y: 16), radius: 15, startAngle: .pi/1.8, endAngle:-.pi/1.8 , clockwise: true)
+        path.addArc(withCenter: CGPoint(x: 16, y: 16), radius: 15, startAngle: .pi/1.9, endAngle:-.pi/1.9 , clockwise: true)
         path.close()
         return path
+    }
+    func setChartPointValue(chartPointValue:Int) {
+        label.text = String(chartPointValue)
     }
 }
 
