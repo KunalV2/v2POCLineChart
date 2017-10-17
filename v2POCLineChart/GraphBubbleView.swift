@@ -27,7 +27,7 @@ class GraphBubbleView: UIView {
         label.frame = CGRect(x: 5, y: 2, width: (self.frame.size.width-10), height: (self.frame.size.height-10))
         label.textAlignment = .center
         label.numberOfLines = 0
-        label.font = UIFont(name: "Lato-Regular", size: 12)
+        label.font = UIFont (name: "Helvetica Neue", size: 12)
         label.textColor = UIColor(red: 57/255.0, green: 57/255.0, blue: 57/255.0, alpha: 1)
         self.addSubview(label)
         
@@ -46,7 +46,7 @@ class GraphBubbleView: UIView {
         let path = UIBezierPath()
         path.move(to: CGPoint(x: 16, y: 1))
         path.addLine(to: CGPoint(x: 34, y: 1))
-        path.addArc(withCenter: CGPoint(x: 34, y: 16), radius: 15, startAngle: -.pi/1.9, endAngle: .pi/1.9, clockwise: true)
+        path.addArc(withCenter: CGPoint(x: 34, y: 16), radius: 15, startAngle: -.pi/2, endAngle: .pi/2, clockwise: true)
         path.addLine(to: CGPoint(x: 30, y: 31))
         path.addLine(to: CGPoint(x: 25, y: 35))
         path.addLine(to: CGPoint(x: 21, y: 31))

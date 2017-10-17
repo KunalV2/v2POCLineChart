@@ -57,7 +57,7 @@ open class LineChart: UIView {
         public var visible: Bool = true
         // #607d8b
         public var color: UIColor = UIColor(red: 96/255.0, green: 125/255.0, blue: 139/255.0, alpha: 1)
-        public var inset: CGFloat = 15
+        public var inset: CGFloat = 27
     }
     
     public struct Coordinate {
@@ -92,6 +92,7 @@ open class LineChart: UIView {
     open var animation: Animation = Animation()
     open var dots: Dots = Dots()
     open var lineWidth: CGFloat = 1
+    let xLabels: [String] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sep", "Oct", "Nov", "Dec"]
     
     open var x: Coordinate = Coordinate()
     open var y: Coordinate = Coordinate()
@@ -101,7 +102,7 @@ open class LineChart: UIView {
     fileprivate var drawingHeight: CGFloat = 0 {
         didSet {
             
-            let max = 600 //getMaximumValue()
+            let max = 700 //getMaximumValue()
             let min = getMinimumValue()
             y.linear = LinearScale(domain: [min, CGFloat(max)], range: [0, drawingHeight])
             y.scale = y.linear.scale()
@@ -148,6 +149,13 @@ open class LineChart: UIView {
 
     convenience init() {
         self.init(frame: CGRect.zero)
+        self.x.labels.values = xLabels
+        self.animation.enabled = false
+        self.area = true
+        self.x.labels.visible = true
+        self.x.grid.count = 1
+        self.y.grid.count = 1
+        self.y.labels.visible = false
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -301,6 +309,7 @@ open class LineChart: UIView {
             
             var data = self.dataStore[0]
             bubbleView.setChartPointValue(chartPointValue: Int(data[dot.recordIndex]))
+            bubbleView.frame = CGRect(x: (dot.position.x-26), y: (dot.position.y-50), width: 51, height:36)
             self.addSubview(bubbleView)
             
             
@@ -337,7 +346,6 @@ open class LineChart: UIView {
             dotLayer.frame = CGRect(x: xValue, y: yValue, width: dots.outerRadius, height: dots.outerRadius)
             self.layer.addSublayer(dotLayer)
             dotLayers.append(dotLayer)
-            
             layerLocalIndex = layerLocalIndex + 1
             
             // animate opacity
@@ -351,6 +359,7 @@ open class LineChart: UIView {
             
         }
         dotsDataStore.append(dotLayers)
+        self.highlightDataPoints(layerLocalIndex)
     }
     
     
@@ -624,8 +633,10 @@ open class LineChart: UIView {
         for (index, _) in xAxisData.enumerated() {
             let xValue = self.x.scale(CGFloat(index)) + x.axis.inset - (width / 2)
             let label = UILabel(frame: CGRect(x: xValue, y: y, width: width, height: x.axis.inset))
-            label.font = UIFont.preferredFont(forTextStyle: UIFontTextStyle.caption2)
+            //label.font = UIFont.preferredFont(forTextStyle: UIFontTextStyle.caption2)
+            label.font = UIFont (name: "Helvetica Neue", size: 10)
             label.textAlignment = .center
+            label.numberOfLines = 0
             label.textColor = UIColor(red: 155/255.0, green: 155/255.0, blue: 174/255.0, alpha: 1)
             if (x.labels.values.count != 0) {
                 text = x.labels.values[index]
@@ -657,6 +668,19 @@ open class LineChart: UIView {
      * Add line chart
      */
     open func addLine(_ data: [CGFloat]) {
+        
+//        var recordData = data
+//        
+//        if recordData.count < 12{
+//            let i = recordData.count
+//            for _ in i..<12{
+//                recordData.append(CGFloat(0))
+//            }
+//        }
+//        else if data.count > 12{
+//            recordData = Array(data.prefix(12))
+//        }
+        
         self.dataStore.append(data)
         bubbleView.frame = CGRect(x:20 , y:20 , width: 51.0, height:36)
         bubbleView.drawBubble()
