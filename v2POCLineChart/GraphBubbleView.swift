@@ -54,8 +54,8 @@ class GraphBubbleView: UIView {
         path.close()
         return path
     }
-    func setChartPointValue(chartPointValue:Int) {
-        label.text = String(chartPointValue)
+    func setChartPointValue(chartPointValue:Float) {
+        label.text = String(format: "%.2f", chartPointValue)
     }
 }
 

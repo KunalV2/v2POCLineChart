@@ -11,7 +11,7 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
     
         var views: [String: AnyObject] = [:]
-        let data: [CGFloat] = [234, 267, 212, 223, 254, 234,213, 280, 235, 221,230,213]
+        let data: [CGFloat] = [0, 0, 212.39, 223, 0, 234,213, 280, 235, 221,0,0]
         
         lineChart = LineChart()
         lineChart.addLine(data)

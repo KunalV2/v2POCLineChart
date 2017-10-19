@@ -93,6 +93,8 @@ open class LineChart: UIView {
     open var dots: Dots = Dots()
     open var lineWidth: CGFloat = 1
     let xLabels: [String] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    var isInfoBuubleAddedToGraph = false
+    var isGraphLoadFirstTime = true
     
     open var x: Coordinate = Coordinate()
     open var y: Coordinate = Coordinate()
@@ -266,6 +268,13 @@ open class LineChart: UIView {
         if isPointContainsInLayer{
             highlightDataPoints(rounded)
         }
+        else{
+            if isInfoBuubleAddedToGraph{
+                isInfoBuubleAddedToGraph = false
+                self.bubbleView.removeFromSuperview()
+                
+            }
+        }
 
         //delegate?.didSelectDataPoint(CGFloat(rounded), yValues: yValues)
     }
@@ -308,10 +317,19 @@ open class LineChart: UIView {
             dot.borderColor = UIColor(red: 88/255.0, green: 127/255.0, blue: 247/255.0, alpha: 1).cgColor
             
             var data = self.dataStore[0]
-            bubbleView.setChartPointValue(chartPointValue: Int(data[dot.recordIndex]))
-            bubbleView.frame = CGRect(x: (dot.position.x-26), y: (dot.position.y-50), width: 51, height:36)
-            self.addSubview(bubbleView)
             
+            if isGraphLoadFirstTime{
+                isGraphLoadFirstTime = false
+            }
+            else{
+                bubbleView.setChartPointValue(chartPointValue: Float(data[dot.recordIndex]))
+                bubbleView.frame = CGRect(x: (dot.position.x-26), y: (dot.position.y-50), width: 51, height:36)
+                if !isInfoBuubleAddedToGraph{
+                    isInfoBuubleAddedToGraph = true
+                    self.addSubview(bubbleView)
+                }
+            }
+        
             
           //  dot.backgroundColor = Helpers.lightenUIColor(colors[lineIndex]).cgColor
         }
